@@ -1,0 +1,140 @@
+{
+  "variant": "S",
+  "timestamp": "2026-05-16T15:55:38.753116",
+  "files": [
+    {
+      "path": "variant_s/apps/views.py",
+      "maintainability_index": 41.13,
+      "functions": [
+        {
+          "name": "analyze_text",
+          "complexity": 3,
+          "rank": "A",
+          "classname": null
+        },
+        {
+          "name": "process_article_task",
+          "complexity": 1,
+          "rank": "A",
+          "classname": null
+        },
+        {
+          "name": "BenchmarkViewSet",
+          "complexity": 3,
+          "rank": "A",
+          "classname": null
+        },
+        {
+          "name": "get_article",
+          "complexity": 2,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "update_article",
+          "complexity": 3,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "external_call",
+          "complexity": 1,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "cache_or_db",
+          "complexity": 3,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "queue_task",
+          "complexity": 2,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "list_small",
+          "complexity": 2,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "list_large",
+          "complexity": 2,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "analyze_article",
+          "complexity": 2,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "bulk_create",
+          "complexity": 4,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "mixed_db_analyze",
+          "complexity": 2,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "mixed_http_serialize",
+          "complexity": 2,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "mixed_pipeline",
+          "complexity": 3,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        },
+        {
+          "name": "health",
+          "complexity": 1,
+          "rank": "A",
+          "classname": "BenchmarkViewSet"
+        }
+      ],
+      "avg_complexity": 2.25
+    },
+    {
+      "path": "variant_s/serializers.py",
+      "maintainability_index": 100.0,
+      "functions": [
+        {
+          "name": "BaseSerializer",
+          "complexity": 1,
+          "rank": "A",
+          "classname": null
+        },
+        {
+          "name": "ArticleSerializer",
+          "complexity": 2,
+          "rank": "A",
+          "classname": null
+        },
+        {
+          "name": "update",
+          "complexity": 1,
+          "rank": "A",
+          "classname": "ArticleSerializer"
+        }
+      ],
+      "avg_complexity": 1.33
+    }
+  ],
+  "summary": {
+    "total_files": 2,
+    "avg_cc": 1.79,
+    "avg_mi": 70.56,
+    "total_functions": 19
+  }
+}

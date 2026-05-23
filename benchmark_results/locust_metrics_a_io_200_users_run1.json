@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-05-16T21:37:36.789418",
+  "duration_seconds": 122.829722,
+  "post_warmup_duration_seconds": 92.018022,
+  "test_period_seconds": 120,
+  "warmup_duration_seconds": 30,
+  "performance_metrics": {
+    "throughput_req_per_sec": 92.2,
+    "throughput_including_warmup_req_per_sec": 89.19,
+    "response_time_p50_ms": 74,
+    "response_time_p95_ms": 370,
+    "response_time_p99_ms": 1200,
+    "error_rate_percent": 0.18
+  },
+  "request_summary": {
+    "total_requests": 10955,
+    "successful_requests": 10935,
+    "failed_requests": 20,
+    "post_warmup_requests": 8484,
+    "post_warmup_successful_requests": 8469,
+    "post_warmup_failed_requests": 15
+  }
+}

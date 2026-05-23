@@ -1,0 +1,39 @@
+# Variant S (Synchronous) - Django REST Framework with Gunicorn
+# Core
+Django==6.0.3
+djangorestframework==3.17.1
+django-cors-headers
+django-environ
+
+# Web Server
+gunicorn==25.3.0
+whitenoise
+
+# Database
+psycopg[binary,pool]
+
+# Cache & Session
+redis==7.4.0
+django-redis
+
+# Task Queue
+celery==5.6.3
+
+# HTTP Client (Synchronous)
+requests
+
+# Utilities
+python-dateutil
+pytz
+
+# Development & Testing
+pytest
+pytest-django
+pytest-cov
+black
+flake8
+isort
+
+# Monitoring & Analysis
+radon==4.1.0
+

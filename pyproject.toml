@@ -1,0 +1,126 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drf-benchmarks"
+version = "0.1.0"
+description = "Comparative benchmark study: Synchronous vs Asynchronous Django REST Framework"
+requires-python = ">=3.14"
+
+dependencies = [
+    # Core Framework
+    "Django==6.0.3",
+    "djangorestframework==3.17.1",
+    "django-cors-headers",
+    "django-environ",
+
+    # Web Servers
+    "gunicorn==25.3.0",
+    "uvicorn[standard]==0.42.0",
+    "asgiref",
+    "whitenoise",
+
+    # Database
+    "psycopg2-binary",
+    "asyncpg",
+
+    # Cache & Session
+    "redis==7.4.0",
+    "aioredis",
+    "django-redis",
+
+    # Task Queue
+    "celery==5.6.3",
+
+    # HTTP Clients
+    "requests",
+    "aiohttp",
+
+    # Utilities
+    "python-dateutil",
+    "pytz",
+    "python-dotenv",
+
+    # Load Testing
+    "locust==2.18.1",
+
+    # Monitoring & Analysis
+    "radon==4.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "pytest-django",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "isort",
+]
+
+# Code style configuration for Black and isort
+
+[tool.black]
+line-length = 100
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+skip_gitignore = true
+known_first_party = ["shared", "config"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+addopts = "--cov=. --cov-report=html --cov-report=term-missing"
+
+[tool.coverage.run]
+omit = [
+    "*/migrations/*",
+    "*/__init__.py",
+    "*/settings.py",
+    "*/urls.py",
+    "*/wsgi.py",
+    "*/asgi.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest",
+    "pytest-asyncio",
+    "pytest-django",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "isort",
+]
+

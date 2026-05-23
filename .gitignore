@@ -1,0 +1,90 @@
+# Environment
+.env
+.env.local
+.venv
+env/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+htmlcov/
+.pytest_cache/
+.tox/
+
+
+
+# Database
+*.sqlite
+*.sqlite3
+db.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Static files
+staticfiles/
+static/
+/static/
+
+# Media files
+media/
+
+# OS
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+
+/dumps/
+*.dump
+
+# VirtualEnv
+bin/
+Include/
+Lib/
+Scripts/
+
+
+# Keep these files
+!.gitignore
+!.python-version
+!.env.example

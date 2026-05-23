@@ -1,0 +1,45 @@
+# Variant A (Asynchronous) - ADRF with Uvicorn
+# Core
+Django==6.0.3
+djangorestframework==3.17.1
+adrf==0.1.12
+django-cors-headers
+django-environ
+
+# Web Server (ASGI)
+uvicorn==0.42.0
+asgiref
+
+# Database
+psycopg[binary,pool]
+asyncpg
+
+# Cache & Session (Async)
+redis==7.4.0
+aioredis
+django-redis
+
+# Task Queue
+celery==5.6.3
+
+# HTTP Client (Asynchronous)
+aiohttp
+
+# Utilities
+python-dateutil
+pytz
+
+# Development & Testing
+pytest
+pytest-asyncio
+pytest-django
+pytest-cov
+black
+flake8
+isort
+
+# Monitoring & Analysis
+radon==4.1.0
+
+# prevent the disutils module missing error
+setuptools

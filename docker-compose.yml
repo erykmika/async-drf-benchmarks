@@ -1,0 +1,140 @@
+services:
+  postgres:
+    image: postgres:18.3-alpine
+    container_name: drf-benchmark-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: drf_benchmark
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:8.6-alpine
+    container_name: drf-benchmark-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgbouncer:
+    image: edoburu/pgbouncer:1.17.0
+    container_name: drf-benchmark-pgbouncer
+    profiles:
+      - pgbouncer
+    depends_on:
+      - postgres
+    ports:
+      - "6432:6432"
+    volumes:
+      - ./docker/pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./docker/pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    environment:
+      - TZ=UTC
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h postgres -p 5432 -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  variant-s-server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: variant-s
+    container_name: drf-benchmark-variant-s
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - DB_HOST=${DB_HOST:-pgbouncer}
+      - DB_PORT=${DB_PORT:-6432}
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=drf_benchmark
+      - REDIS_URL=redis://redis:6379/0
+      - DJANGO_SETTINGS_MODULE=config.settings
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./benchmark_results:/app/benchmark_results
+      - ./variant_s:/app/variant_s
+      - ./shared:/app/shared
+    command: >
+      sh -c "cd variant_s && 
+             python manage.py migrate &&
+             gunicorn -c gunicorn_config.py config.wsgi:application"
+
+  variant-a-server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: variant-a
+    container_name: drf-benchmark-variant-a
+    ports:
+      - "8001:8001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - DB_HOST=${DB_HOST:-pgbouncer}
+      - DB_PORT=${DB_PORT:-6432}
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=drf_benchmark
+      - REDIS_URL=redis://redis:6379/0
+      - DJANGO_SETTINGS_MODULE=config.settings
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./benchmark_results:/app/benchmark_results
+      - ./variant_a:/app/variant_a
+      - ./shared:/app/shared
+    command: >
+      sh -c "cd variant_a && 
+             python manage.py migrate &&
+             uvicorn --host 0.0.0.0 --port 8001 config.asgi:application"
+
+  locust:
+    build:
+      context: .
+      dockerfile: docker/locust/Dockerfile.locust
+    container_name: drf-benchmark-locust
+    ports:
+      - "8089:8089"
+    depends_on:
+      - variant-s-server
+      - variant-a-server
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOCUST_HOST=http://variant-s-server:8000
+    volumes:
+      - ./benchmarks:/app/benchmarks
+      - ./benchmark_results:/app/benchmark_results
+      - ./variant_s:/app/variant_s
+      - ./variant_a:/app/variant_a
+      - ./shared:/app/shared
+
+volumes:
+  postgres_data:
+  redis_data:
+

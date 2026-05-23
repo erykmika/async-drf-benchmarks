@@ -1,0 +1,16 @@
+# Dockerfile for Locust load testing
+
+FROM python:3.14-slim
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir locust radon matplotlib scipy
+
+COPY benchmarks/ /app/benchmarks/
+
+ENV PYTHONUNBUFFERED=1
+
+# default to headless mode, can be overridden
+EXPOSE 8089
+
+CMD ["locust", "-f", "/app/benchmarks/locustfile.py", "--headless"]

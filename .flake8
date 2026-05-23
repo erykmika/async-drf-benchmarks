@@ -1,0 +1,9 @@
+# Flake8 configuration
+[flake8]
+max-line-length = 100
+exclude = .git,__pycache__,docs/source/conf.py,old/long_names.py,build,dist,.venv,migrations
+ignore = E203, W503, E501
+per-file-ignores =
+    __init__.py:F401
+    tests/*:F841,E501
+
