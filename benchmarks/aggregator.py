@@ -11,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Any, Tuple
 from scipy.stats import mannwhitneyu
-import matplotlib
+import matplotlib.pyplot as plt
 
 
 class MetricsAggregator:
@@ -479,7 +479,18 @@ class MetricsAggregator:
                             group_metrics = metrics
 
                         value = group_metrics.get(metric_key, {}).get("median", 0)
-                        ax.bar(x_pos, value, width=0.35, label=f"Wariant {variant}")
+
+                        bar = ax.bar(x_pos, value, width=0.35, label=f"Wariant {variant}")
+
+                        for b in bar:
+                            ax.text(
+                                b.get_x() + b.get_width() / 2,
+                                b.get_height(),
+                                f"{b.get_height():.1f}",
+                                ha="center",
+                                va="bottom",
+                                fontsize=9
+                            )
 
                         x_labels.append(f"{user_count} użytkowników\n{variant}")
                         x_ticks.append(x_pos)

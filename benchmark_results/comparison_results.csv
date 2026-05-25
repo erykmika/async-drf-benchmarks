@@ -1,8 +1,8 @@
 Liczba użytkowników,Wariant,Grupa punktu końcowego,Metryka,Średnia,Mediana,Odchylenie standardowe,Jednostka
-10,Wariant S,wszystko,Przepustowość,4.78,4.77,0.11,req/s
-,,,Czas odpowiedzi P50,7,7,2.4,ms
-,,,Czas odpowiedzi P95,255.11,110,273.17,ms
-,,,Czas odpowiedzi P99,475.11,270,501.19,ms
+10,Wariant S,wszystko,Przepustowość,4.77,4.76,0.1,req/s
+,,,Czas odpowiedzi P50,7.22,7,2.28,ms
+,,,Czas odpowiedzi P95,256.22,110,272.52,ms
+,,,Czas odpowiedzi P99,485.11,270,497.7,ms
 ,,,Wskaźnik błędów,0.0,0.0,0.0,%
 10,Wariant S,cpu,Przepustowość,4.84,4.86,0.09,req/s
 ,,,Czas odpowiedzi P50,7.67,8,0.58,ms
@@ -14,10 +14,10 @@ Liczba użytkowników,Wariant,Grupa punktu końcowego,Metryka,Średnia,Mediana,O
 ,,,Czas odpowiedzi P95,616.67,630,23.09,ms
 ,,,Czas odpowiedzi P99,1133.33,1100,57.74,ms
 ,,,Wskaźnik błędów,0.0,0.0,0.0,%
-10,Wariant S,mixed,Przepustowość,4.79,4.77,0.05,req/s
-,,,Czas odpowiedzi P50,4.67,5,0.58,ms
-,,,Czas odpowiedzi P95,110,110,0.0,ms
-,,,Czas odpowiedzi P99,166.67,110,98.15,ms
+10,Wariant S,mixed,Przepustowość,4.76,4.76,0.01,req/s
+,,,Czas odpowiedzi P50,5.33,5,1.53,ms
+,,,Czas odpowiedzi P95,113.33,110,5.77,ms
+,,,Czas odpowiedzi P99,196.67,110,150.11,ms
 ,,,Wskaźnik błędów,0.0,0.0,0.0,%
 10,Wariant A,wszystko,Przepustowość,4.79,4.78,0.07,req/s
 ,,,Czas odpowiedzi P50,14.11,12,3.22,ms

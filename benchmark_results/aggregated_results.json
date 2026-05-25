@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-19T18:13:03.356296",
+  "timestamp": "2026-05-25T20:43:31.333690",
   "variants": {
     "S": {
       "locust_metrics": {
@@ -61,43 +61,43 @@
             "run_count": 3,
             "throughput": {
               "values": [
-                4.85,
+                4.75,
                 4.76,
                 4.77
               ],
-              "mean": 4.79,
-              "median": 4.77,
-              "stdev": 0.05
+              "mean": 4.76,
+              "median": 4.76,
+              "stdev": 0.01
             },
             "response_time_p50_ms": {
               "values": [
-                5,
+                7,
                 4,
                 5
               ],
-              "mean": 4.67,
+              "mean": 5.33,
               "median": 5,
-              "stdev": 0.58
+              "stdev": 1.53
             },
             "response_time_p95_ms": {
               "values": [
-                110,
+                120,
                 110,
                 110
               ],
-              "mean": 110,
+              "mean": 113.33,
               "median": 110,
-              "stdev": 0.0
+              "stdev": 5.77
             },
             "response_time_p99_ms": {
               "values": [
-                280,
+                370,
                 110,
                 110
               ],
-              "mean": 166.67,
+              "mean": 196.67,
               "median": 110,
-              "stdev": 98.15
+              "stdev": 150.11
             },
             "error_rate_percent": {
               "values": [
@@ -173,13 +173,13 @@
                 4.65,
                 4.87,
                 4.59,
-                4.85,
+                4.75,
                 4.76,
                 4.77
               ],
-              "mean": 4.78,
-              "median": 4.77,
-              "stdev": 0.11
+              "mean": 4.77,
+              "median": 4.76,
+              "stdev": 0.1
             },
             "response_time_p50_ms": {
               "values": [
@@ -189,13 +189,13 @@
                 8,
                 6,
                 12,
-                5,
+                7,
                 4,
                 5
               ],
-              "mean": 7,
+              "mean": 7.22,
               "median": 7,
-              "stdev": 2.4
+              "stdev": 2.28
             },
             "response_time_p95_ms": {
               "values": [
@@ -205,13 +205,13 @@
                 630,
                 590,
                 630,
-                110,
+                120,
                 110,
                 110
               ],
-              "mean": 255.11,
+              "mean": 256.22,
               "median": 110,
-              "stdev": 273.17
+              "stdev": 272.52
             },
             "response_time_p99_ms": {
               "values": [
@@ -221,13 +221,13 @@
                 1100,
                 1100,
                 1200,
-                280,
+                370,
                 110,
                 110
               ],
-              "mean": 475.11,
+              "mean": 485.11,
               "median": 270,
-              "stdev": 501.19
+              "stdev": 497.7
             },
             "error_rate_percent": {
               "values": [
@@ -1616,7 +1616,7 @@
       "psutil_metrics": {},
       "complexity_metrics": {
         "variant": "A",
-        "timestamp": "2026-05-16T21:31:01.657510",
+        "timestamp": "2026-05-16T21:24:56.031050",
         "files": [
           {
             "path": "variant_a/apps/views.py",
