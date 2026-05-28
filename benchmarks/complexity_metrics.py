@@ -38,8 +38,14 @@ class ComplexityMetrics:
             with open(filepath, "r", encoding="utf-8") as f:
                 code = f.read()
 
-            # Get CC
-            cc_results = cc_visit(code)
+            # Get all CC blocks
+            raw_cc_results = cc_visit(code)
+
+            # Keep only functions/methods (exclude classes)
+            cc_results = [
+                obj for obj in raw_cc_results
+                if obj.__class__.__name__ != "Class"
+            ]
 
             # Get MI
             mi_result = mi_visit(code, multi=False)
@@ -51,21 +57,31 @@ class ComplexityMetrics:
             }
 
             total_cc = 0
+
             for func in cc_results:
                 classname = getattr(func, "classname", None)
+
                 func_data = {
                     "name": func.name,
                     "complexity": func.complexity,
                     "rank": cc_rank(func.complexity),
                     "classname": classname,
                 }
+
                 file_data["functions"].append(func_data)
                 total_cc += func.complexity
 
+            # Average CC for this file
             if cc_results:
-                file_data["avg_complexity"] = round(total_cc / len(cc_results), 2)
+                file_data["avg_complexity"] = round(
+                    total_cc / len(cc_results), 2
+                )
             else:
                 file_data["avg_complexity"] = 0
+
+            # Save totals for global stats
+            file_data["total_cc"] = total_cc
+            file_data["function_count"] = len(cc_results)
 
             return file_data
 
@@ -115,19 +131,31 @@ class ComplexityMetrics:
 
             if file_metrics:
                 self.metrics["files"].append(file_metrics)
-                total_cc += file_metrics.get("avg_complexity", 0)
-                total_functions += len(file_metrics.get("functions", []))
+
+                total_cc += file_metrics.get("total_cc", 0)
+                total_functions += file_metrics.get("function_count", 0)
 
         # Calculate summary statistics
         if self.metrics["files"]:
             self.metrics["summary"]["total_files"] = len(self.metrics["files"])
-            self.metrics["summary"]["avg_cc"] = round(total_cc / len(self.metrics["files"]), 2)
             self.metrics["summary"]["total_functions"] = total_functions
 
-            # Calculate average MI
-            mis = [f.get("maintainability_index", 0) for f in self.metrics["files"]]
+            # REAL global avg CC
+            if total_functions > 0:
+                self.metrics["summary"]["avg_cc"] = round(
+                    total_cc / total_functions, 2
+                )
+
+            # Average MI
+            mis = [
+                f.get("maintainability_index", 0)
+                for f in self.metrics["files"]
+            ]
+
             if mis:
-                self.metrics["summary"]["avg_mi"] = round(sum(mis) / len(mis), 2)
+                self.metrics["summary"]["avg_mi"] = round(
+                    sum(mis) / len(mis), 2
+                )
 
     def save_results(self, filename: str = None) -> Path:
         """Save complexity metrics to JSON file"""

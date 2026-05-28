@@ -169,3 +169,20 @@ _final-teardown:
 	@echo "Tearing down benchmark environment..."
 	docker compose $(PROFILE_FLAG) down --remove-orphans
 	@echo "Teardown complete"
+
+run-complexity-both:
+	@echo ""
+	@echo "=========================================="
+	@echo "Running Complexity Analysis (S + A)"
+	@echo "=========================================="
+	@echo ""
+
+	@echo "--- Variant S ---"
+	@docker compose run --rm locust python /app/benchmarks/complexity_metrics.py s
+
+	@echo ""
+	@echo "--- Variant A ---"
+	@docker compose run --rm locust python /app/benchmarks/complexity_metrics.py a
+
+	@echo ""
+	@echo "Complexity analysis completed"

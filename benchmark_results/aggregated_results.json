@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-25T20:43:31.333690",
+  "timestamp": "2026-05-28T17:59:21.059189",
   "variants": {
     "S": {
       "locust_metrics": {
@@ -739,7 +739,7 @@
       "psutil_metrics": {},
       "complexity_metrics": {
         "variant": "S",
-        "timestamp": "2026-05-16T15:55:38.753116",
+        "timestamp": "2026-05-28T17:57:34.743754",
         "files": [
           {
             "path": "variant_s/apps/views.py",
@@ -754,12 +754,6 @@
               {
                 "name": "process_article_task",
                 "complexity": 1,
-                "rank": "A",
-                "classname": null
-              },
-              {
-                "name": "BenchmarkViewSet",
-                "complexity": 3,
                 "rank": "A",
                 "classname": null
               },
@@ -842,24 +836,14 @@
                 "classname": "BenchmarkViewSet"
               }
             ],
-            "avg_complexity": 2.25
+            "avg_complexity": 2.2,
+            "total_cc": 33,
+            "function_count": 15
           },
           {
             "path": "variant_s/serializers.py",
             "maintainability_index": 100.0,
             "functions": [
-              {
-                "name": "BaseSerializer",
-                "complexity": 1,
-                "rank": "A",
-                "classname": null
-              },
-              {
-                "name": "ArticleSerializer",
-                "complexity": 2,
-                "rank": "A",
-                "classname": null
-              },
               {
                 "name": "update",
                 "complexity": 1,
@@ -867,14 +851,16 @@
                 "classname": "ArticleSerializer"
               }
             ],
-            "avg_complexity": 1.33
+            "avg_complexity": 1.0,
+            "total_cc": 1,
+            "function_count": 1
           }
         ],
         "summary": {
           "total_files": 2,
-          "avg_cc": 1.79,
+          "avg_cc": 2.12,
           "avg_mi": 70.56,
-          "total_functions": 19
+          "total_functions": 16
         }
       }
     },
@@ -1616,7 +1602,7 @@
       "psutil_metrics": {},
       "complexity_metrics": {
         "variant": "A",
-        "timestamp": "2026-05-16T21:24:56.031050",
+        "timestamp": "2026-05-28T17:57:41.380576",
         "files": [
           {
             "path": "variant_a/apps/views.py",
@@ -1631,12 +1617,6 @@
               {
                 "name": "process_article_task",
                 "complexity": 1,
-                "rank": "A",
-                "classname": null
-              },
-              {
-                "name": "BenchmarkViewSet",
-                "complexity": 3,
                 "rank": "A",
                 "classname": null
               },
@@ -1719,24 +1699,14 @@
                 "classname": "BenchmarkViewSet"
               }
             ],
-            "avg_complexity": 2.25
+            "avg_complexity": 2.2,
+            "total_cc": 33,
+            "function_count": 15
           },
           {
             "path": "variant_a/serializers.py",
             "maintainability_index": 100.0,
             "functions": [
-              {
-                "name": "BaseSerializer",
-                "complexity": 1,
-                "rank": "A",
-                "classname": null
-              },
-              {
-                "name": "ArticleSerializer",
-                "complexity": 2,
-                "rank": "A",
-                "classname": null
-              },
               {
                 "name": "update",
                 "complexity": 1,
@@ -1744,14 +1714,16 @@
                 "classname": "ArticleSerializer"
               }
             ],
-            "avg_complexity": 1.33
+            "avg_complexity": 1.0,
+            "total_cc": 1,
+            "function_count": 1
           }
         ],
         "summary": {
           "total_files": 2,
-          "avg_cc": 1.79,
+          "avg_cc": 2.12,
           "avg_mi": 70.56,
-          "total_functions": 19
+          "total_functions": 16
         }
       }
     }

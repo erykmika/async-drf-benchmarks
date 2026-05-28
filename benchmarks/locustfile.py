@@ -376,7 +376,7 @@ def on_test_stop(environment, **kwargs):
 
     # Prepare aggregated metrics
     metrics = {
-        "timestamp": test_end_time.isoformat(),
+    "timestamp": test_end_time.isoformat(),
         "duration_seconds": total_duration,
         "post_warmup_duration_seconds": post_warmup_duration,
         "test_period_seconds": TEST_DURATION,
