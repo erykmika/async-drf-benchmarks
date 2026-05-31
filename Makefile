@@ -8,17 +8,17 @@ GROUPS := cpu io mixed
 ENDPOINT_GROUP ?= all
 USE_PGBOUNCER ?= true
 
-ifeq ($(USE_PGBOUNCER),true)
-	DB_HOST := pgbouncer
-	DB_PORT := 6432
-	DOCKER_PROFILE := pgbouncer
-	PROFILE_FLAG := --profile pgbouncer
-else
-	DB_HOST := postgres
-	DB_PORT := 5432
-	DOCKER_PROFILE :=
-	PROFILE_FLAG :=
-endif
+# ifeq ($(USE_PGBOUNCER),true)
+DB_HOST := pgbouncer
+DB_PORT := 6432
+DOCKER_PROFILE := pgbouncer
+PROFILE_FLAG := --profile pgbouncer
+# else
+# 	DB_HOST := postgres
+# 	DB_PORT := 5432
+# 	DOCKER_PROFILE :=
+# 	PROFILE_FLAG :=
+# endif
 
 export DB_HOST
 export DB_PORT
@@ -70,15 +70,15 @@ benchmark-all: _benchmark-setup run-s-benchmark run-a-benchmark _aggregate-resul
 _benchmark-setup:
 	@echo "Setting up benchmark environment..."
 	@echo "Cleaning up any existing containers..."
-	docker compose $(PROFILE_FLAG) down --remove-orphans
+	docker compose down --remove-orphans
 
 	mkdir -p benchmark_results
 
 	@echo "Building Docker images..."
-	docker compose $(PROFILE_FLAG) build variant-s-server variant-a-server locust
+	docker compose  build variant-s-server variant-a-server locust
 
 	@echo "Starting infrastructure services..."
-	docker compose $(PROFILE_FLAG) up -d postgres redis $(if $(filter pgbouncer,$(DOCKER_PROFILE)),pgbouncer)
+	docker compose up -d postgres redis pgbouncer
 
 	@echo "Waiting for services to be healthy..."
 	@bash -c '\
@@ -95,11 +95,11 @@ _benchmark-setup:
 	exit 0'
 
 	@echo "Applying migrations..."
-	docker compose $(PROFILE_FLAG) run --rm variant-s-server sh -c "cd variant_s && python manage.py migrate"
-	docker compose $(PROFILE_FLAG) run --rm variant-a-server sh -c "cd variant_a && python manage.py migrate"
+	docker compose run --rm variant-s-server sh -c "cd variant_s && python manage.py migrate"
+	docker compose run --rm variant-a-server sh -c "cd variant_a && python manage.py migrate"
 
 	@echo "Seeding benchmark data..."
-	docker compose $(PROFILE_FLAG) run --rm variant-s-server sh -c "cd variant_s && python manage.py shell -c \"from shared.models import Article; Article.objects.get_or_create(id=1, defaults={'title':'Seed Article','content':'Seed content'})\""
+	docker compose run --rm variant-s-server sh -c "cd variant_s && python manage.py shell -c \"from shared.models import Article; Article.objects.get_or_create(id=1, defaults={'title':'Seed Article','content':'Seed content'})\""
 
 _run-variant-benchmark:
 	@echo "Collecting complexity metrics for Variant $(VARIANT)..."
@@ -107,10 +107,10 @@ _run-variant-benchmark:
 
 	@echo ""
 	@echo "Starting server..."
-	docker compose $(PROFILE_FLAG) up -d \
+	docker compose up -d \
 	postgres \
 	redis \
-	$(if $(filter pgbouncer,$(DOCKER_PROFILE)),pgbouncer) \
+	pgbouncer \
 	variant-$(shell echo $(VARIANT) | tr A-Z a-z)-server
 
 	@echo "Waiting for server health check..."
@@ -129,27 +129,27 @@ _run-variant-benchmark:
 
 	@echo ""
 	@echo "Running Locust benchmarks (3 repetitions)..."
-	@for run in 1 ; do \
+	@for run in 1 2 3; do \
 		echo ""; \
 		echo "Run $$run/3 - 10 users"; \
 		RUN_NUM=$$run docker compose run --rm -e RUN_NUM=$$run -e ENDPOINT_GROUP=$(ENDPOINT_GROUP) \
 			locust locust -f /app/benchmarks/locustfile.py --host $(HOST) \
 			--users 10 --spawn-rate 1 --run-time 120 --headless; \
-# 		echo ""; \
-# 		echo "Run $$run/3 - 50 users"; \
-# 		RUN_NUM=$$run docker compose run --rm -e RUN_NUM=$$run -e ENDPOINT_GROUP=$(ENDPOINT_GROUP) \
-# 			locust locust -f /app/benchmarks/locustfile.py --host $(HOST) \
-# 			--users 50 --spawn-rate 5 --run-time 120 --headless; \
-# 		echo ""; \
-# 		echo "Run $$run/3 - 200 users"; \
-# 		RUN_NUM=$$run docker compose run --rm -e RUN_NUM=$$run -e ENDPOINT_GROUP=$(ENDPOINT_GROUP) \
-# 			locust locust -f /app/benchmarks/locustfile.py --host $(HOST) \
-# 			--users 200 --spawn-rate 20 --run-time 120 --headless; \
+		echo ""; \
+		echo "Run $$run/3 - 50 users"; \
+		RUN_NUM=$$run docker compose run --rm -e RUN_NUM=$$run -e ENDPOINT_GROUP=$(ENDPOINT_GROUP) \
+			locust locust -f /app/benchmarks/locustfile.py --host $(HOST) \
+			--users 50 --spawn-rate 5 --run-time 120 --headless; \
+		echo ""; \
+		echo "Run $$run/3 - 200 users"; \
+		RUN_NUM=$$run docker compose run --rm -e RUN_NUM=$$run -e ENDPOINT_GROUP=$(ENDPOINT_GROUP) \
+			locust locust -f /app/benchmarks/locustfile.py --host $(HOST) \
+			--users 200 --spawn-rate 20 --run-time 120 --headless; \
 	done
 
 	@echo ""
 	@echo "Stopping services..."
-	docker compose $(PROFILE_FLAG) down
+	docker compose down
 
 _aggregate-results:
 	@echo ""
@@ -167,7 +167,7 @@ _aggregate-results:
 
 _final-teardown:
 	@echo "Tearing down benchmark environment..."
-	docker compose $(PROFILE_FLAG) down --remove-orphans
+	docker compose down --remove-orphans
 	@echo "Teardown complete"
 
 run-complexity-both:
