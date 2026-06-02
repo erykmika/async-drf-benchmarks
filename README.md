@@ -38,9 +38,3 @@ make run-a-benchmark-io
 make run-s-benchmark-mixed
 make run-a-benchmark-mixed
 ```
-
-## Disable PgBouncer
-
-```bash
-make benchmark-all USE_PGBOUNCER=false
-```
